@@ -94,6 +94,48 @@ export const constantRoutes = [
  */
 export const asyncRoutes = [
   {
+    path: '/menu1',
+    component: Layout,
+    redirect: '/menu1/menu1-1',
+    name: 'Menu1',
+    meta: {
+      title: 'Menu1',
+      innerno: '#1'
+    },
+    children: [
+      {
+        path: 'menu1-1',
+        component: () => import('@/views/menu1/menu1-1'),
+        name: 'Menu1-1',
+        meta: {
+          title: 'Menu1-1',
+          innerno: '#1_1'
+        }
+      }
+    ]
+  },
+  {
+    path: '/menu2',
+    component: Layout,
+    redirect: '/menu2/menu2-6',
+    name: 'Menu2',
+    meta: {
+      title: 'Menu2',
+      innerno: '#1_6'
+    },
+    children: [
+      {
+        path: 'menu2-6',
+        component: () => import('@/views/menu2/menu2-6'),
+        name: 'Menu2-6',
+        meta: {
+          title: 'Menu2-6',
+          innerno: '#1_6'
+        }
+      }
+    ]
+  },
+  {
     path: '/nested',
     component: Layout,
     redirect: '/nested/menu1',
@@ -171,7 +213,6 @@ const createRouter = () => new Router({
   scrollBehavior: () => ({ y: 0 }),
   routes: constantRoutes
 })
-
 
 const router = createRouter()
 

@@ -3,21 +3,22 @@
     <hamburger :is-active="sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar" />
     <breadcrumb class="breadcrumb-container" />
     <div class="right-menu">
-      <el-dropdown class="avatar-container" trigger="click">
-        <div class="avatar-wrapper">
-          <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar"> &nbsp; &nbsp; &nbsp; &nbsp; 
-          <span  style="cursor: pointer;position: relative;top: -14px;">{{ roleName }}</span> 
-          <i class="el-icon-caret-bottom" />  
-        </div>
-        <el-dropdown-menu slot="dropdown" class="user-dropdown" >
-          <el-dropdown-item @click.native="changeRole(item)" v-for="(item,indx) in roles" :key="indx">
-            {{ item.roleName }}
-          </el-dropdown-item>
-          <el-dropdown-item divided @click.native="logout">
-            <span style="display:block;text-align: center;font-weight: 700;">退 出</span>
-          </el-dropdown-item>
-        </el-dropdown-menu>
-      </el-dropdown>
+      <RoleSwitcher />
+<!--      <el-dropdown class="avatar-container" trigger="click">-->
+<!--        <div class="avatar-wrapper">-->
+<!--          <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar"> &nbsp; &nbsp; &nbsp; &nbsp; -->
+<!--          <span  style="cursor: pointer;position: relative;top: -14px;">{{ roleName }}</span> -->
+<!--          <i class="el-icon-caret-bottom" />  -->
+<!--        </div>-->
+<!--        <el-dropdown-menu slot="dropdown" class="user-dropdown" >-->
+<!--          <el-dropdown-item @click.native="changeRole(item)" v-for="(item,indx) in roles" :key="indx">-->
+<!--            {{ item.roleName }}-->
+<!--          </el-dropdown-item>-->
+<!--          <el-dropdown-item divided @click.native="logout">-->
+<!--            <span style="display:block;text-align: center;font-weight: 700;">退 出</span>-->
+<!--          </el-dropdown-item>-->
+<!--        </el-dropdown-menu>-->
+<!--      </el-dropdown>-->
     </div>
   </div>
 </template>
@@ -26,12 +27,12 @@
 import { mapGetters } from 'vuex'
 import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from '@/components/Hamburger'
-import roleData from '@/api/role'
-import menuData from '@/api/menu'
+import RoleSwitcher from './RoleSwitcher'
 export default {
   components: {
     Breadcrumb,
-    Hamburger
+    Hamburger,
+    RoleSwitcher
   },
   data() {
     return {
@@ -46,31 +47,6 @@ export default {
     ])
   },
   mounted() {
-    this.roleName = this.roles[0].roleName
-
-    let rolesArr = []
-    this.roles[0].funcs.forEach(role => {
-      menuData.response.function.forEach((menu)=>{
-          if(role == menu.INNERNO ){
-            rolesArr.push({...menu})
-          }
-      })
-    });
-
-    
-    console.log(rolesArr);
-    // try {
-    //   const filteredFunctions = menuData.response.function.filter(function(item) {
-    //     return this.roles[0].funcs.some(innerNo => item.INNERNO.includes(innerNo));
-    //   });
-    //   console.log(filteredFunctions);
-    // } catch (error) {
-    //   console.error("No matching INNERNO found: ", error);
-    // }
-    // const filteredFunctions = menuData.response.function.filter(function(item) {
-    //   return this.roles[0].funcs.some(innerNo => item.INNERNO.includes(innerNo));
-    // });
-    // console.log('filteredFunctions',this.roles[0].funcs);
   },
   methods: {
     changeRole(item){

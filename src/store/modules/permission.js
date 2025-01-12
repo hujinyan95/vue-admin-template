@@ -1,64 +1,52 @@
-import { asyncRoutes, constantRoutes } from '@/router'
+import { constantRoutes, asyncRoutes } from '@/router'
+import store from '@/store'
+import { buildMenuTree } from '@/utils/menuHelper'
 
-/**
- * Use meta.role to determine if the current user has permission
- * @param roles
- * @param route
- */
-function hasPermission(roles, route) {
-  if (route.meta && route.meta.roles) {
-    return roles.some(role => route.meta.roles.includes(role))
-  } else {
-    return true
-  }
-}
-/**
- * Filter asynchronous routing tables by recursion
- * @param routes asyncRoutes
- * @param roles
- */
-export function filterAsyncRoutes(routes, roles) {
+function filterRoutesByFuncs(routes, funcs) {
   const res = []
-
   routes.forEach(route => {
     const tmp = { ...route }
-
-    console.log('...tmp',tmp);
-    if (hasPermission(roles, tmp)) {
+    if (funcs.includes(tmp.meta?.innerno)) {
       if (tmp.children) {
-        tmp.children = filterAsyncRoutes(tmp.children, roles)
+        tmp.children = filterRoutesByFuncs(tmp.children, funcs)
       }
       res.push(tmp)
     }
   })
-
   return res
 }
 
 const state = {
   routes: [],
-  addRoutes: []
+  addRoutes: [],
+  roleFuncs: [],
+  currentRole: null,
+  menuTree: []
 }
 
 const mutations = {
-  SET_ROUTES: (state, routes) => {
+  SET_ROUTES(state, routes) {
     state.addRoutes = routes
     state.routes = constantRoutes.concat(routes)
+  },
+  SET_ROLE(state, { role, funcs }) {
+    state.currentRole = role
+    state.roleFuncs = funcs
+  },
+  SET_MENU_TREE(state, tree) {
+    state.menuTree = tree
   }
 }
 
 const actions = {
-  generateRoutes({ commit }, roles) {
-    return new Promise(resolve => {
-      let accessedRoutes
-      if (roles.includes('admin')) {
-        accessedRoutes = asyncRoutes || []
-      } else {
-        accessedRoutes = filterAsyncRoutes(asyncRoutes, roles)
-      }
-      commit('SET_ROUTES', accessedRoutes)
-      resolve(accessedRoutes)
-    })
+  async updateRole({ commit, dispatch }, { role, funcs }) {
+    const menuList = store.state.user.menuList // 命名空间访问
+    commit('SET_ROLE', { role, funcs })
+    const menuTree = buildMenuTree(menuList.filter(item => funcs.includes(item.INNERNO)))
+    commit('SET_MENU_TREE', menuTree)
+    console.log('updateRole', menuTree)
+    const accessedRoutes = filterRoutesByFuncs(asyncRoutes, funcs)
+    return accessedRoutes
   }
 }
 
