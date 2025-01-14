@@ -39,6 +39,7 @@ router.beforeEach(async(to, from, next) => {
           })
           // const accessRoutes = await store.dispatch('permission/generateRoutes', roles)
           console.log('accessRoutes', accessRoutes)
+          commit('SET_ROUTES', accessRoutes)
           router.addRoutes(accessRoutes)
           next({ ...to, replace: true })
         } catch (error) {

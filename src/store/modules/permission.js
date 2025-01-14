@@ -46,6 +46,7 @@ const actions = {
     commit('SET_MENU_TREE', menuTree)
     console.log('updateRole', menuTree)
     const accessedRoutes = filterRoutesByFuncs(asyncRoutes, funcs)
+    commit('SET_ROUTES', accessedRoutes)
     return accessedRoutes
   }
 }

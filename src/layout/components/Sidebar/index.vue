@@ -12,10 +12,11 @@
         :collapse-transition="false"
         mode="vertical"
       >
-<!--        <sidebar-item v-for="route in menuTree" :key="route.path" :item="route" :base-path="route.path" />-->
+       <sidebar-item v-for="route in routes" :key="route.path" :item="route" :base-path="route.path" />
+      </el-menu>
 <!--      </el-menu>-->
-<!--       <el-menu :default-active="activeMenu" class="menu" :router="true">-->
-        <template v-for="item in menuTree">
+      <!-- <el-menu :default-active="activeMenu" class="menu" :router="true"> -->
+        <!-- <template v-for="item in menuTree">
           <el-submenu v-if="item.children && item.children.length" :key="item.INNERNO" :index="item.INNERNO">
             <template slot="title">{{ item.FUNCNAME }}</template>
             <el-menu-item
@@ -29,8 +30,8 @@
           <el-menu-item v-else :key="item.INNERNO" :index="item.FUNCADDRESS">
             {{ item.FUNCNAME }}
           </el-menu-item>
-        </template>
-      </el-menu>
+        </template> -->
+      <!-- </el-menu> -->
     </el-scrollbar>
   </div>
 </template>
@@ -46,8 +47,12 @@ export default {
   computed: {
     ...mapGetters([
       'permission_routes',
-      'sidebar'
+      'sidebar',
+      'routes'
     ]),
+    mounted() {
+      console.log('this.permission_routes',this.$store.state.permission.routes)
+    },
     menuTree() {
       return this.$store.state.permission.menuTree
     },
