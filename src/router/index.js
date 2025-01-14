@@ -124,24 +124,6 @@ export const asyncRoutes = [
       }
     ]
   },
-  // {
-  //   path: '/gdsz',
-  //   component: Layout,
-  //   redirect: '/gdsz/dkyxCode',
-  //   meta: {
-  //     title: '个贷数字管理',
-  //     icon: 'el-icon-s-help',
-  //     innerno: '#1'
-  //   },
-  //   children: [
-  //     {
-  //       path: 'dkyxCode',
-  //       name: 'DkyxCode',
-  //       component: () => import('@/views/dkyx/view/dkyxCode'),
-  //       meta: { title: '营销二维码生成',innerno: '#1_1'},
-  //     },
-  //   ]
-  // },
   {
     path: 'external-link',
     component: Layout,
