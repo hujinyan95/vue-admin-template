@@ -17,7 +17,6 @@ export default {
     }
   },
   mounted() {
-    console.log('this.selectedRole', this.$store.state.user.roles)
     this.selectedRole = this.$store.state.user.roles[0].roleNo
   },
   methods: {

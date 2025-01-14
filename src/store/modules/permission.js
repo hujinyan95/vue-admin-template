@@ -1,19 +1,36 @@
 import { constantRoutes, asyncRoutes } from '@/router'
 import store from '@/store'
 import { buildMenuTree } from '@/utils/menuHelper'
+import Layout from '@/layout';
 
 function filterRoutesByFuncs(routes, funcs) {
-  const res = []
+  const res = [];
+
   routes.forEach(route => {
-    const tmp = { ...route }
-    if (funcs.includes(tmp.meta?.innerno)) {
+    // 克隆当前路由，避免修改原始数据
+    const tmp = { ...route };
+
+    // 检查当前路由或其子路由是否符合权限
+    const isAllowed =
+      funcs.includes(tmp.meta?.innerno) ||
+      (tmp.children && tmp.children.some(child => funcs.includes(child.meta?.innerno)));
+
+    if (isAllowed) {
       if (tmp.children) {
-        tmp.children = filterRoutesByFuncs(tmp.children, funcs)
+        // 递归过滤子路由
+        tmp.children = filterRoutesByFuncs(tmp.children, funcs);
       }
-      res.push(tmp)
+
+      // 如果当前路由是一级路由且没有组件，自动设置为 Layout
+      if (!tmp.component && (!tmp.parent || tmp.children?.length > 0)) {
+        tmp.component = Layout;
+      }
+
+      res.push(tmp);
     }
-  })
-  return res
+  });
+
+  return res;
 }
 
 const state = {
@@ -44,8 +61,9 @@ const actions = {
     commit('SET_ROLE', { role, funcs })
     const menuTree = buildMenuTree(menuList.filter(item => funcs.includes(item.INNERNO)))
     commit('SET_MENU_TREE', menuTree)
-    console.log('updateRole', menuTree)
+    console.log('menuTree', menuTree)
     const accessedRoutes = filterRoutesByFuncs(asyncRoutes, funcs)
+    console.log('accessedRoutes', menuTree)
     commit('SET_ROUTES', accessedRoutes)
     return accessedRoutes
   }

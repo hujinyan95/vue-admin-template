@@ -1,13 +1,20 @@
 export function buildMenuTree(menuData) {
-  const menuMap = {}
-  menuData.forEach(item => menuMap[item.INNERNO] = { ...item, children: [] })
+  // 将 menuData 转为 Map，便于快速查找
+  const menuMap = new Map(menuData.map(item => [item.INNERNO, { ...item, children: [] }]))
+
   const tree = []
   menuData.forEach(item => {
     if (item.PINNERNO === '0') {
-      tree.push(menuMap[item.INNERNO])
-    } else if (menuMap[item.PINNERNO]) {
-      menuMap[item.PINNERNO].children.push(menuMap[item.INNERNO])
+      // 如果是根节点，加入树
+      tree.push(menuMap.get(item.INNERNO))
+    } else {
+      // 如果不是根节点，找到父节点并加入其 children
+      const parent = menuMap.get(item.PINNERNO)
+      if (parent) {
+        parent.children.push(menuMap.get(item.INNERNO))
+      }
     }
   })
+
   return tree
 }

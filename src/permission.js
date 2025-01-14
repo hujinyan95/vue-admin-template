@@ -27,7 +27,6 @@ router.beforeEach(async(to, from, next) => {
       NProgress.done()
     } else {
       const roleFuncs = store.state.permission.roleFuncs
-      console.log('roleFuncs', roleFuncs)
       if (roleFuncs.length) {
         next()
       } else {
@@ -37,10 +36,8 @@ router.beforeEach(async(to, from, next) => {
             role: roles.roleName,
             funcs: roles.funcs
           })
-          // const accessRoutes = await store.dispatch('permission/generateRoutes', roles)
-          console.log('accessRoutes', accessRoutes)
-          commit('SET_ROUTES', accessRoutes)
           router.addRoutes(accessRoutes)
+          console.log(router)
           next({ ...to, replace: true })
         } catch (error) {
           next('/login')

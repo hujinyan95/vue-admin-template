@@ -1,5 +1,5 @@
 <template>
-  <div :class="{'has-logo':showLogo}">
+  <div :class="{ 'has-logo': showLogo }">
     <logo v-if="showLogo" :collapse="isCollapse" />
     <el-scrollbar wrap-class="scrollbar-wrapper">
       <el-menu
@@ -11,27 +11,10 @@
         :active-text-color="variables.menuActiveText"
         :collapse-transition="false"
         mode="vertical"
+        :router="true"
       >
-       <sidebar-item v-for="route in routes" :key="route.path" :item="route" :base-path="route.path" />
+        <menu-item v-for="item in menuTree" :key="item.INNERNO" :item="item" />
       </el-menu>
-<!--      </el-menu>-->
-      <!-- <el-menu :default-active="activeMenu" class="menu" :router="true"> -->
-        <!-- <template v-for="item in menuTree">
-          <el-submenu v-if="item.children && item.children.length" :key="item.INNERNO" :index="item.INNERNO">
-            <template slot="title">{{ item.FUNCNAME }}</template>
-            <el-menu-item
-              v-for="child in item.children"
-              :key="child.INNERNO"
-              :index="child.FUNCADDRESS"
-            >
-              {{ child.FUNCNAME }}
-            </el-menu-item>
-          </el-submenu>
-          <el-menu-item v-else :key="item.INNERNO" :index="item.FUNCADDRESS">
-            {{ item.FUNCNAME }}
-          </el-menu-item>
-        </template> -->
-      <!-- </el-menu> -->
     </el-scrollbar>
   </div>
 </template>
@@ -39,41 +22,57 @@
 <script>
 import { mapGetters } from 'vuex'
 import Logo from './Logo'
-import SidebarItem from './SidebarItem'
 import variables from '@/styles/variables.scss'
 
+// 使用 MenuItem 的 render 函数版本
+const MenuItem = {
+  props: ['item'],
+  render(h) {
+    if (this.item.children && this.item.children.length) {
+      return h(
+        'el-submenu',
+        { props: { index: this.item.FUNCADDRESS || this.item.INNERNO } },
+        [
+          h('template', { slot: 'title' }, this.item.FUNCNAME),
+          this.item.children.map(child =>
+            h(MenuItem, { props: { item: child }, key: child.INNERNO })
+          ),
+        ]
+      );
+    } else {
+      return h(
+        'el-menu-item',
+        { props: { index: this.item.FUNCADDRESS || this.item.INNERNO } },
+        this.item.FUNCNAME
+      );
+    }
+  },
+};
+
 export default {
-  components: { SidebarItem, Logo },
+  components: { Logo, 'menu-item': MenuItem },
   computed: {
-    ...mapGetters([
-      'permission_routes',
-      'sidebar',
-      'routes'
-    ]),
-    mounted() {
-      console.log('this.permission_routes',this.$store.state.permission.routes)
-    },
+    ...mapGetters(['permission_routes', 'sidebar', 'routes']),
     menuTree() {
-      return this.$store.state.permission.menuTree
+      return this.$store.state.permission.menuTree;
     },
     activeMenu() {
-      const route = this.$route
-      const { meta, path } = route
-      // if set path, the sidebar will highlight the path you set
-      if (meta.activeMenu) {
-        return meta.activeMenu
-      }
-      return path
+      const { meta, path } = this.$route;
+      return meta.activeMenu || path;
     },
     showLogo() {
-      return this.$store.state.settings.sidebarLogo
+      return this.$store.state.settings.sidebarLogo;
     },
     variables() {
-      return variables
+      return variables;
     },
     isCollapse() {
-      return !this.sidebar.opened
-    }
-  }
-}
+      return !this.sidebar.opened;
+    },
+  },
+  mounted() {
+    console.log('Menu Tree:', this.menuTree);
+    console.log('Routes:', this.$store.state.permission.routes);
+  },
+};
 </script>
