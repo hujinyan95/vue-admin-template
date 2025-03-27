@@ -89,3 +89,13 @@ Modern browsers and Internet Explorer 10+.
 [MIT](https://github.com/PanJiaChen/vue-admin-template/blob/master/LICENSE) license.
 
 Copyright (c) 2017-present PanJiaChen
+
+
+
+#### 
+登录
+返回302 调用重定向的接口 返回地址 直接跳转
+
+00000 正常码 
+
+正常角色菜单接口 

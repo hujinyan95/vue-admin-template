@@ -8,14 +8,14 @@ localVue.use(VueRouter)
 localVue.use(ElementUI)
 
 const routes = [
-  {
-    path: '/',
-    name: 'home',
-    children: [{
-      path: 'dashboard',
-      name: 'dashboard'
-    }]
-  },
+  // {
+  //   path: '/',
+  //   name: 'home',
+  //   children: [{
+  //     path: 'dashboard',
+  //     name: 'dashboard'
+  //   }]
+  // },
   {
     path: '/menu',
     name: 'menu',

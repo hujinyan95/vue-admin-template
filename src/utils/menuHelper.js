@@ -1,7 +1,17 @@
 export function buildMenuTree(menuData) {
   // 将 menuData 转为 Map，便于快速查找
-  const menuMap = new Map(menuData.map(item => [item.INNERNO, { ...item, children: [] }]))
-
+  const menuMap = new Map(menuData.map(item => [item.INNERNO, 
+    { 
+      ...item,
+      path:item.FUNCADDRESS||'',
+      redirect:item.FUNCADDRESS||'',
+      meta:{
+        title:item.FUNCNAME,
+        innerno:item.INNERNO,
+      },
+      children: []
+   }
+  ]))
   const tree = []
   menuData.forEach(item => {
     if (item.PINNERNO === '0') {

@@ -26,13 +26,13 @@
           "LEAF": "1"
         },
         {
-          "FUNCNO": "功能代码",
+          "FUNCNO": "功能代码", 
           "FUNCLEVEL": "1",
           "FUNCADDRESS": "order/view/orderList",
-          "APPLNO": "105",
+          "APPLNO": "105", 
           "INNERNO": "#11",
           "FUNCDESC": "",
-          "FUNCNAME": "录单订单查询",
+          "FUNCNAME": "录单订单查询", 
           "PINNERNO": "0",
           "LEAF": "1"
         },

@@ -23,7 +23,7 @@
   <script>
   
   export default {
-    name: 'dkyxCode',
+    name: 'accMgr',
     computed: {
       message() {
         return 'The webmaster said that you can not enter this page...'

@@ -40,17 +40,17 @@ export const constantRoutes = [
     component: () => import('@/views/404'),
     hidden: true
   },
-  {
-    path: '/',
-    component: Layout,
-    redirect: '/dashboard',
-    children: [{
-      path: 'dashboard',
-      name: 'Dashboard',
-      component: () => import('@/views/dashboard/index'),
-      meta: { title: 'Dashboard', icon: 'dashboard' }
-    }]
-  },
+  // {
+  //   path: '/',
+  //   component: Layout,
+  //   redirect: '/dashboard',
+  //   children: [{
+  //     path: 'dashboard',
+  //     name: 'Dashboard',
+  //     component: () => import('@/views/dashboard/index'),
+  //     meta: { title: 'Dashboard', icon: 'dashboard' }
+  //   }]
+  // },
   // {
   //   path: '/example',
   //   component: Layout,
@@ -94,14 +94,13 @@ export const asyncRoutes = [
   {
     path: '/dkyx/view',
     component: Layout,
-    redirect: '/dkyx/view/dkyxCode',
-    name: 'Example',
-    meta: { title: '个贷数字管理', icon: 'el-icon-s-help',innerno: '#1' },
+    redirect: 'dkyxCode',
+    meta: { title: '个贷数字管理', icon: 'el-icon-s-help',innerno: '#1'},
     children: [
       {
-        path: '/dkyx/view/dkyxCode',
-        name: 'dkyxCode',
-        component: () => import('@/views/table/index'),
+        path: 'dkyxCode',
+        name: 'dkyxCode', 
+        component: () => import('@/views/dkyx/view/dkyxCode'),
         hidden: false,
         meta: { title: '营销二维码生成', icon: 'table', innerno: '#1_1'}
       },
@@ -109,19 +108,28 @@ export const asyncRoutes = [
         path: '/accRole/view',
         component: Layout,
         redirect: '/accRole/view/accRole',
-        children: [{
-          path: '/accRole/view/accRole',
+        meta: { title: '角色维护', icon: 'el-icon-s-help',innerno: '#1_10'},
+        children: [
+          {
+          path: 'accRole',
           name: 'accRole',
           component: () => import('@/views/tree/index'),
-          meta: { title: 'accRole', icon: 'dashboard', innerno: '#1_10' }
-        }]
+          meta: { title: 'accRole', icon: 'dashboard', innerno: '#1_10_1'}
+        },
+        {
+          path: 'accMgr',
+          name: 'accMgr',
+          component: () => import('@/views/accRole/view/accMgr'),
+          meta: { title: 'accRole', icon: 'dashboard', innerno: '#1_10_2'}
+        }
+      ]
       },
-      {
-        path: 'tree',
-        name: 'Tree',
-        component: () => import('@/views/tree/index'),
-        meta: { title: '功能代码', icon: 'tree'}
-      }
+      // {
+      //   path: '/accRole/view',
+      //   component: Layout,
+      //   redirect: 'accRole/view/accMgr',
+      //   children: []
+      // },
     ]
   },
   {
