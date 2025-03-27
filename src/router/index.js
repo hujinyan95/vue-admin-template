@@ -40,17 +40,17 @@ export const constantRoutes = [
     component: () => import('@/views/404'),
     hidden: true
   },
-  // {
-  //   path: '/',
-  //   component: Layout,
-  //   redirect: '/dashboard',
-  //   children: [{
-  //     path: 'dashboard',
-  //     name: 'Dashboard',
-  //     component: () => import('@/views/dashboard/index'),
-  //     meta: { title: 'Dashboard', icon: 'dashboard' }
-  //   }]
-  // },
+  {
+    path: '/',
+    component: Layout,
+    redirect: '/dashboard',
+    children: [{
+      path: 'dashboard',
+      name: 'Dashboard',
+      component: () => import('@/views/dashboard/index'),
+      meta: { title: 'Dashboard', icon: 'dashboard' }
+    }]
+  },
   // {
   //   path: '/example',
   //   component: Layout,
@@ -94,7 +94,7 @@ export const asyncRoutes = [
   {
     path: '/dkyx/view',
     component: Layout,
-    redirect: 'dkyxCode',
+    redirect: '/dkyx/view/dkyxCode',
     meta: { title: '个贷数字管理', icon: 'el-icon-s-help',innerno: '#1'},
     children: [
       {
@@ -114,13 +114,13 @@ export const asyncRoutes = [
           path: 'accRole',
           name: 'accRole',
           component: () => import('@/views/tree/index'),
-          meta: { title: 'accRole', icon: 'dashboard', innerno: '#1_10_1'}
+          meta: { title: '客户经理角色维护', icon: 'dashboard', innerno: '#1_10_1'}
         },
         {
           path: 'accMgr',
           name: 'accMgr',
           component: () => import('@/views/accRole/view/accMgr'),
-          meta: { title: 'accRole', icon: 'dashboard', innerno: '#1_10_2'}
+          meta: { title: '客户经理维护', icon: 'dashboard', innerno: '#1_10_2'}
         }
       ]
       },
