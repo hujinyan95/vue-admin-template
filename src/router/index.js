@@ -104,23 +104,27 @@ export const asyncRoutes = [
         component: () => import('@/views/table/index'),
         hidden: false,
         meta: { title: '营销二维码生成', icon: 'table', innerno: '#1_1'}
-      },
+      }
+    ]
+  },
+  {
+    path: '/accRole/view',
+    component: Layout,
+    redirect: '/accRole/view/accRole',
+    name: 'Example1',
+    meta: { title: '角色维护', icon: 'el-icon-s-help',innerno: '#1' },
+    children: [
       {
-        path: '/accRole/view',
-        component: Layout,
-        redirect: '/accRole/view/accRole',
-        children: [{
-          path: '/accRole/view/accRole',
-          name: 'accRole',
-          component: () => import('@/views/tree/index'),
-          meta: { title: 'accRole', icon: 'dashboard', innerno: '#1_10' }
-        }]
-      },
-      {
-        path: 'tree',
-        name: 'Tree',
+        path: '/accRole/view/accRole',
+        name: 'accRole',
         component: () => import('@/views/tree/index'),
-        meta: { title: '功能代码', icon: 'tree'}
+        meta: { title: 'accRole', icon: 'dashboard', innerno: '#1_10' }
+      },
+      {
+        path: '/accRole/view/accMgr',
+        name: 'accMgr',
+        component: () => import('@/views/menu1/menu1-1.vue'),
+        meta: { title: '功能代码', icon: 'tree', innerno: '#1_10_2'}
       }
     ]
   },

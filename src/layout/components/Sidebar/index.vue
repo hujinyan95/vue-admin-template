@@ -74,5 +74,11 @@ export default {
     console.log('Menu Tree:', this.menuTree);
     console.log('Routes:', this.$store.state.permission.routes);
   },
+  methods: {
+    handleSelect(key, keyPath) {
+      console.log('key, keyPath', key, keyPath);
+      this.$router.push({ path: `/${keyPath}` })
+    }
+  }
 };
 </script>

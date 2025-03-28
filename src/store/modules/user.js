@@ -83,7 +83,7 @@ const menuMock = {
       {
         "FUNCNO": "功能代码",
         "FUNCLEVEL": "2",
-        "FUNCADDRESS": "dkyx/view/dkyxCode",
+        "FUNCADDRESS": "/dkyx/view/dkyxCode",
         "APPLNO": "105",
         "INNERNO": "#1_1",
         "FUNCNAME": "营销二维码生成",
